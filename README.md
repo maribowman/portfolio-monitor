@@ -1,0 +1,1 @@
+really simple server to dispatch messages and attachments on signal using already linked device id's.
