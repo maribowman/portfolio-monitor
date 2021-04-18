@@ -9,6 +9,6 @@ type Message struct {
 
 type Recipient struct {
 	IsGroup   bool     `json:"isGroup"`
-	GroupID   string   `json:"groupID"`
+	GroupID   string   `json:"groupId"`
 	Receivers []string `json:"receivers"`
 }

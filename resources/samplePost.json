@@ -1,0 +1,12 @@
+{
+  "sender": "+4915226264500",
+  "recipient": {
+    "isGroup": false,
+    "groupId": "",
+    "receivers": [
+      "+4915226264500"
+    ]
+  },
+  "text": "I love bacon!",
+  "attachment": ""
+}

@@ -12,7 +12,8 @@ type cmdLineBuilder struct {
 
 func NewCmdLineBuilder(attachmentDir string) *cmdLineBuilder {
 	clb := &cmdLineBuilder{
-		builder:       []string{"./signal-cli"},
+		builder:       []string{},
+		//builder:       []string{"./signal-cli"},
 		attachmentDir: attachmentDir,
 	}
 	return clb

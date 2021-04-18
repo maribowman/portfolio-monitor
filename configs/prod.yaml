@@ -1,8 +1,5 @@
 server:
-  port: 8080
+  port: 9876
   mode: release
-tomtomClient:
-  timeoutMillis: 5000
-  clientCert: ./../../resources/auth/tomtom_osrm_routing.crt
-  clientCertKey: ./../../resources/auth/tomtom_osrm_routing.key
-  lastModifiedTimeoutMin: 10
+signal:
+  linkedDevice: test

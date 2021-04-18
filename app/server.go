@@ -19,6 +19,6 @@ func setupRouter() *gin.Engine {
 	gin.SetMode(config.Config.Server.Mode)
 	router := gin.Default()
 
-	router.GET("/send", service.SendMessage)
+	router.POST("/send", service.SendMessage)
 	return router
 }
