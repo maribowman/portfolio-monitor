@@ -1,0 +1,8 @@
+server:
+  port: 8080
+  mode: release
+tomtomClient:
+  timeoutMillis: 5000
+  clientCert: ./../../resources/auth/tomtom_osrm_routing.crt
+  clientCertKey: ./../../resources/auth/tomtom_osrm_routing.key
+  lastModifiedTimeoutMin: 10
