@@ -1,44 +1,54 @@
 package service
 
 import (
+	"bytes"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"log"
 	"maribowman/signal-transmitter/app/model"
 	"net/http"
 	"os/exec"
-	"strings"
 	"time"
 )
 
 func SendMessage(context *gin.Context) {
-	var messageDTA model.Message
-	if err := context.ShouldBindJSON(&messageDTA); err != nil {
+	var dto model.Message
+	if err := context.ShouldBindJSON(&dto); err != nil {
 		context.JSON(http.StatusBadRequest, "could not bind dta")
 		return
 	}
 
 	cmdline := NewCmdLineBuilder("./").
-		from(messageDTA.Sender).
-		sendMessage(messageDTA.Text).
-		to(messageDTA.Recipient).
-		withAttachment(messageDTA.Attachment).
+		from(dto.Sender).
+		sendMessage(dto.Text).
+		to(dto.Recipient).
+		withAttachment(dto.Attachment).
 		build()
 
-	log.Println(strings.Join(cmdline, " "))
-
 	cmd := exec.Command("/home/mari/Dev/signal-cli-0.8.1/bin/signal-cli", cmdline...)
+	var errBuffer bytes.Buffer
+	cmd.Stderr = &errBuffer
 	if err := cmd.Start(); err != nil {
 		log.Println("signal-cli:", err)
-		context.Status(http.StatusInternalServerError)
+		context.JSON(http.StatusInternalServerError, gin.H{"error": "operation timed out. killing process."})
 		return
 	}
-	log.Println("waiting...")
+
 	done := make(chan error, 1)
 	go func() {
 		done <- cmd.Wait()
 	}()
-	log.Println("still waiting...")
-
-	time.Sleep(20 * time.Second)
+	select {
+	case <-time.After(20 * time.Second):
+		cmd.Process.Kill()
+		context.JSON(http.StatusInternalServerError, gin.H{"error": "operation timed out. killing process."})
+		return
+	case err := <-done:
+		if err != nil {
+			log.Println("signal-cli:", err)
+			context.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("signal-cli:%s", errBuffer.String())})
+			return
+		}
+	}
 	context.Status(http.StatusNoContent)
 }

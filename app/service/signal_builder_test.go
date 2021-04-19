@@ -26,7 +26,7 @@ func TestCmdLineBuilder(t *testing.T) {
 			},
 			message:    "I love bacon!",
 			attachment: "",
-			expected:   []string{"./signal-cli -u mari send -m \"I love bacon!\" everyone"},
+			expected:   []string{"-u mari send -m \"I love bacon!\" everyone"},
 		},
 		{
 			sender: "mari",
@@ -37,7 +37,7 @@ func TestCmdLineBuilder(t *testing.T) {
 			},
 			message:    "I love bacon!",
 			attachment: "",
-			expected:   []string{"./signal-cli -u mari send -m \"I love bacon!\" -g <group-id>"},
+			expected:   []string{"-u mari send -m \"I love bacon!\" -g <group-id>"},
 		},
 		{
 			sender: "mari",
@@ -48,7 +48,7 @@ func TestCmdLineBuilder(t *testing.T) {
 			},
 			message:    "I love bacon!",
 			attachment: "./../../resources/testAttachment.png",
-			expected:   []string{"./signal-cli -u mari send -m \"I love bacon!\" everyone -a ", ".png"},
+			expected:   []string{"-u mari send -m \"I love bacon!\" everyone -a ", ".png"},
 		},
 	}
 
