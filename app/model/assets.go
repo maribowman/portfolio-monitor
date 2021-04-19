@@ -1,11 +1,19 @@
 package model
 
+type CoinbaseWrapper struct {
+	Asset Asset `json:"data"`
+}
+
 type Asset struct {
-	Data struct {
-		Base     string `json:"base"`
-		Currency string `json:"currency"`
-		Amount   string `json:"amount"`
-	} `json:"data"`
+	Ticker   string `json:"base"`
+	Currency string `json:"currency"`
+	Amount   string `json:"amount"`
+}
+
+type Position struct {
+	Ticker string `json:"ticker"`
+	Isin   string `json:"isin"`
+	Amount string `json:"amount"`
 }
 
 type FinanceService interface {
