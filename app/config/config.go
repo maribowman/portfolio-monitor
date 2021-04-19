@@ -10,6 +10,7 @@ var Config = loadConfig()
 
 type config struct {
 	Server ServerConfig
+	Client ClientConfig
 	Signal SignalConfig
 }
 

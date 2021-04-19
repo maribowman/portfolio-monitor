@@ -1,4 +1,4 @@
-NAME			:= marschine/signal-transmitter
+NAME			:= marschine/portfolio-monitor
 GIT_BRANCH		:= $(shell git rev-parse --abbrev-ref HEAD)
 GIT_HASH		:= $(shell git rev-parse --short HEAD)
 TAG				:= $(GIT_BRANCH)_$(GIT_HASH)

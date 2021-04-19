@@ -3,8 +3,10 @@ package app
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"maribowman/signal-transmitter/app/config"
-	"maribowman/signal-transmitter/app/service"
+	"maribowman/portfolio-monitor/app/config"
+	"maribowman/portfolio-monitor/app/controller"
+	"maribowman/portfolio-monitor/app/repository"
+	"maribowman/portfolio-monitor/app/service"
 	"net/http"
 )
 
@@ -19,6 +21,13 @@ func setupRouter() *gin.Engine {
 	gin.SetMode(config.Config.Server.Mode)
 	router := gin.Default()
 
-	router.POST("/send", service.SendMessage)
+	controller.NewController(&controller.Wiring{
+		Router: router,
+		CoinbaseService: service.NewCoinbaseService(&service.Wiring{
+			FinanceClient: repository.NewCoinbaseClient(),
+			Messenger:     nil,
+		}),
+	})
+
 	return router
 }

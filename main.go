@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"log"
-	"maribowman/signal-transmitter/app"
+	"maribowman/portfolio-monitor/app"
 	"net/http"
 	"os"
 	"os/signal"
