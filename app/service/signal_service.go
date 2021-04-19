@@ -25,7 +25,7 @@ func SendMessage(context *gin.Context) {
 		withAttachment(dto.Attachment).
 		build()
 
-	cmd := exec.Command("/home/mari/Dev/signal-cli-0.8.1/bin/signal-cli", cmdline...)
+	cmd := exec.Command("signal-cli", cmdline...)
 	var errBuffer bytes.Buffer
 	cmd.Stderr = &errBuffer
 	if err := cmd.Start(); err != nil {
