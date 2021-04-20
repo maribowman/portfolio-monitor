@@ -2,4 +2,7 @@ server:
   port: 9876
   mode: debug
 signal:
-  linkedDevice: test
+  linkedDevice: ${portfolio-monitor.signal.linkedDevice}
+coinbase:
+  apiKey: ${portfolio-monitor.coinbase.apiKey}
+  apiSecret: ${portfolio-monitor.coinbase.apiSecret}

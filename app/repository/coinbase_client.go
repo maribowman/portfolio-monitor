@@ -21,6 +21,7 @@ func NewCoinbaseClient() model.FinanceClient {
 	}
 }
 
+// GetPrice Coinbase API: https://developers.coinbase.com/api/v2?shell#prices
 func (client *CoinbaseClient) GetPrice(ticker string) (model.Asset, error) {
 	var response model.CoinbaseWrapper
 	if err := client.restClient.getData("api.coinbase.com", "/v2", fmt.Sprintf("/prices/%s/spot", ticker), nil, nil, &response); err != nil {
