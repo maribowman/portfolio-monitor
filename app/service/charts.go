@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/go-echarts/go-echarts/v2/charts"
 	"github.com/go-echarts/go-echarts/v2/opts"
+	"github.com/go-echarts/go-echarts/v2/types"
 	"log"
 	"maribowman/portfolio-monitor/app/model"
 	"os"
@@ -12,33 +13,43 @@ import (
 
 func drawPieChart(assets []model.Asset, positions []model.Position) {
 	pie := charts.NewPie()
-	pie.SetGlobalOptions(charts.WithTitleOpts(opts.Title{Title: "Crypto Assets"}),
-		//pie.SetGlobalOptions(charts.WithTitleOpts(opts.Title{Title: "Crypto Assets"}),
-		//	charts.WithToolboxOpts(opts.Toolbox{
-		//		Show: false,
-		//		Feature: &opts.ToolBoxFeature{
-		//			SaveAsImage: &opts.ToolBoxFeatureSaveAsImage{
-		//				Show:  false,
-		//				Type:  "png",
-		//				Name:  "crypto-pie",
-		//				Title: "Crypto Assets",
-		//			},
-		//		},
-		//	}),
+	pie.SetGlobalOptions(
+		charts.WithTitleOpts(opts.Title{
+			Title: "Crypto Assets",
+			Top:  "center",
+			Left:  "center",
+		}),
+		charts.WithInitializationOpts(opts.Initialization{
+			Theme: types.ThemeChalk,
+		}),
+		charts.WithToolboxOpts(opts.Toolbox{
+			Show: true,
+			Feature: &opts.ToolBoxFeature{
+				SaveAsImage: &opts.ToolBoxFeatureSaveAsImage{
+					Show: true,
+					Type: "png",
+					Name: "crypto-pie",
+				},
+			},
+		}),
 	)
 
 	pie.AddSeries("pie chart", generatePieItems(assets, positions)).
-		SetSeriesOptions(charts.WithLabelOpts(
-			opts.Label{
+		SetSeriesOptions(
+			charts.WithLabelOpts(opts.Label{
 				Show:      true,
 				Formatter: "{b}: {c}",
 			}),
 			charts.WithPieChartOpts(opts.PieChart{
-				Radius: []string{"40%", "75%"},
+				Radius:   []string{"40%", "75%"},
+				//RoseType: "radius",
 			}),
 		)
-	file, _ := os.Create("pie.html")
-	//file, _ := os.Create("pie.png")
+	file, err := os.Create("pie.html")
+	//file, err := os.Create("pie.png")
+	if err != nil {
+		log.Println(err.Error())
+	}
 	if err := pie.Render(file); err != nil {
 		log.Println(err.Error())
 	}
