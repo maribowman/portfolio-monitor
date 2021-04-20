@@ -17,15 +17,16 @@ func TestCharts(t *testing.T) {
 				{Ticker: "BTC", Amount: "0.02011424"},
 			},
 			assets: []model.Asset{
-				{Ticker: "ETH", Currency: "EUR", Amount: "1767.53"},
-				{Ticker: "BCH", Currency: "EUR", Amount: "754.45"},
-				{Ticker: "BTC", Currency: "EUR", Amount: "45866.59"},
+				{Ticker: "ETH", Currency: "EUR", Amount: "1814.53"},
+				{Ticker: "BCH", Currency: "EUR", Amount: "784.45"},
+				{Ticker: "BTC", Currency: "EUR", Amount: "464766.59"},
 			},
 		},
 	}
 	for _, table := range tables {
 
-		drawPieChart(table.assets, table.positions)
+		drawDonutChart(table.assets, table.positions)
+		//drawPieChart(table.assets, table.positions)
 
 	}
 }

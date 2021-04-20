@@ -51,9 +51,7 @@ func drawPieChart(assets []model.Asset, positions []model.Position) {
 		log.Println(err.Error())
 	}
 
-
 	log.Printf("data:\n%v", pie.Assets)
-
 
 	if err := pie.Render(file); err != nil {
 		log.Println(err.Error())
