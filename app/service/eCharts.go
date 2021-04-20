@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/go-echarts/go-echarts/v2/charts"
 	"github.com/go-echarts/go-echarts/v2/opts"
+	"github.com/go-echarts/go-echarts/v2/render"
 	"github.com/go-echarts/go-echarts/v2/types"
 	"log"
 	"maribowman/portfolio-monitor/app/model"
@@ -13,10 +14,11 @@ import (
 
 func drawPieChart(assets []model.Asset, positions []model.Position) {
 	pie := charts.NewPie()
+	pie.Renderer = render.NewChartRender(pie, pie.Validate)
 	pie.SetGlobalOptions(
 		charts.WithTitleOpts(opts.Title{
 			Title: "Crypto Assets",
-			Top:  "center",
+			Top:   "center",
 			Left:  "center",
 		}),
 		charts.WithInitializationOpts(opts.Initialization{
@@ -27,7 +29,6 @@ func drawPieChart(assets []model.Asset, positions []model.Position) {
 			Feature: &opts.ToolBoxFeature{
 				SaveAsImage: &opts.ToolBoxFeatureSaveAsImage{
 					Show: true,
-					Type: "png",
 					Name: "crypto-pie",
 				},
 			},
@@ -41,8 +42,7 @@ func drawPieChart(assets []model.Asset, positions []model.Position) {
 				Formatter: "{b}: {c}",
 			}),
 			charts.WithPieChartOpts(opts.PieChart{
-				Radius:   []string{"40%", "75%"},
-				//RoseType: "radius",
+				Radius: []string{"40%", "75%"},
 			}),
 		)
 	file, err := os.Create("pie.html")
@@ -50,6 +50,11 @@ func drawPieChart(assets []model.Asset, positions []model.Position) {
 	if err != nil {
 		log.Println(err.Error())
 	}
+
+
+	log.Printf("data:\n%v", pie.Assets)
+
+
 	if err := pie.Render(file); err != nil {
 		log.Println(err.Error())
 	}
