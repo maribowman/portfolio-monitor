@@ -24,6 +24,6 @@ type FinanceClient interface {
 	GetPrice(ticker, currency string) (Asset, error)
 }
 
-type Messenger interface {
+type MessengerClient interface {
 	Push(holding Holding, recipient string) error
 }
