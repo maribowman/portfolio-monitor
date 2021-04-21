@@ -22,9 +22,9 @@ func NewCoinbaseClient() model.FinanceClient {
 }
 
 // GetPrice Coinbase API: https://developers.coinbase.com/api/v2?shell#prices
-func (client *CoinbaseClient) GetPrice(ticker string) (model.Asset, error) {
+func (client *CoinbaseClient) GetPrice(ticker, currency string) (model.Asset, error) {
 	var response model.CoinbaseWrapper
-	if err := client.restClient.getData("api.coinbase.com", "/v2", fmt.Sprintf("/prices/%s/spot", ticker), nil, nil, &response); err != nil {
+	if err := client.restClient.getData("api.coinbase.com", "/v2", fmt.Sprintf("/prices/%s-%s/spot", ticker, currency), nil, nil, &response); err != nil {
 		return model.Asset{}, err
 	}
 	return response.Asset, nil

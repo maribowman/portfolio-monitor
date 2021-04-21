@@ -1,18 +1,28 @@
 package service
 
 import (
+	"bufio"
+	"encoding/base64"
 	"fmt"
 	"github.com/go-echarts/go-echarts/v2/charts"
 	"github.com/go-echarts/go-echarts/v2/opts"
 	"github.com/go-echarts/go-echarts/v2/render"
 	"github.com/go-echarts/go-echarts/v2/types"
+	"io/ioutil"
 	"log"
 	"maribowman/portfolio-monitor/app/model"
 	"os"
 	"strconv"
 )
 
-func drawPieChart(assets []model.Asset, positions []model.Position) {
+func createBase64PieChart(assets []model.Asset, positions []model.Holding) (string, error){
+	drawPieChart(assets,positions)
+	file, _ := os.Open("pie.html")
+	content, _ := ioutil.ReadAll(bufio.NewReader(file))
+	return base64.StdEncoding.EncodeToString(content), nil
+}
+
+func drawPieChart(assets []model.Asset, positions []model.Holding) {
 	pie := charts.NewPie()
 	pie.Renderer = render.NewChartRender(pie, pie.Validate)
 	pie.SetGlobalOptions(
@@ -51,14 +61,12 @@ func drawPieChart(assets []model.Asset, positions []model.Position) {
 		log.Println(err.Error())
 	}
 
-	log.Printf("data:\n%v", pie.Assets)
-
 	if err := pie.Render(file); err != nil {
 		log.Println(err.Error())
 	}
 }
 
-func generatePieItems(assets []model.Asset, positions []model.Position) []opts.PieData {
+func generatePieItems(assets []model.Asset, positions []model.Holding) []opts.PieData {
 	items := make([]opts.PieData, 0)
 	for _, position := range positions {
 		for _, asset := range assets {

@@ -10,9 +10,9 @@ type Asset struct {
 	Amount   string `json:"amount"`
 }
 
-type Position struct {
+type Holding struct {
 	Ticker string `json:"ticker"`
-	Isin   string `json:"isin"`
+	ISIN   string `json:"isin"`
 	Amount string `json:"amount"`
 }
 
@@ -21,9 +21,9 @@ type FinanceService interface {
 }
 
 type FinanceClient interface {
-	GetPrice(ticker string) (Asset, error)
+	GetPrice(ticker, currency string) (Asset, error)
 }
 
 type Messenger interface {
-	Push(price float32, recipient string) error
+	Push(holding Holding, recipient string) error
 }

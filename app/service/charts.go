@@ -1,30 +1,34 @@
 package service
 
 import (
+	"bufio"
+	"encoding/base64"
 	"fmt"
 	"github.com/wcharczuk/go-chart/v2"
+	"io/ioutil"
 	"maribowman/portfolio-monitor/app/model"
 	"os"
 	"strconv"
 )
 
-func drawDonutChart(assets []model.Asset, positions []model.Position) {
+func createBase64DonutChart(assets []model.Asset, positions []model.Holding) (string, error) {
 	donut := chart.DonutChart{
-		Title:        "Crypto Assets",
+		Title:        "Cryptos in Euro",
 		TitleStyle:   chart.Style{},
 		ColorPalette: chart.AlternateColorPalette,
-		Width:        512,
-		Height:       512,
+		Width:        700,
+		Height:       500,
 		DPI:          0,
 		Values:       generateDonutItems(assets, positions),
 	}
-
 	file, _ := os.Create("donut.png")
 	defer file.Close()
 	donut.Render(chart.PNG, file)
+	content, _ := ioutil.ReadAll(bufio.NewReader(file))
+	return base64.StdEncoding.EncodeToString(content), nil
 }
 
-func generateDonutItems(assets []model.Asset, positions []model.Position) []chart.Value {
+func generateDonutItems(assets []model.Asset, positions []model.Holding) []chart.Value {
 	items := make([]chart.Value, 0)
 	for _, position := range positions {
 		for _, asset := range assets {

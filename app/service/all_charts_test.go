@@ -7,11 +7,11 @@ import (
 
 func TestCharts(t *testing.T) {
 	tables := []struct {
-		positions []model.Position
+		positions []model.Holding
 		assets    []model.Asset
 	}{
 		{
-			positions: []model.Position{
+			positions: []model.Holding{
 				{Ticker: "ETH", Amount: "0.500"},
 				{Ticker: "BCH", Amount: "1.000"},
 				{Ticker: "BTC", Amount: "0.02011424"},
@@ -25,7 +25,7 @@ func TestCharts(t *testing.T) {
 	}
 	for _, table := range tables {
 
-		drawDonutChart(table.assets, table.positions)
+		createBase64DonutChart(table.assets, table.positions)
 		//drawPieChart(table.assets, table.positions)
 
 	}
