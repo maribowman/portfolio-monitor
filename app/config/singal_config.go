@@ -1,5 +1,6 @@
 package config
 
 type SignalConfig struct {
-	LinkedDevice string
+	DispatcherServer string
+	LinkedDevice     string
 }

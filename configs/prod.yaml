@@ -2,6 +2,7 @@ server:
   port: 9876
   mode: release
 signal:
+  dispatcherServer: 192.168.178.49:9876
   linkedDevice: ${portfolio-monitor.signal.linkedDevice}
 coinbase:
   apiKey: ${portfolio-monitor.coinbase.apiKey}
