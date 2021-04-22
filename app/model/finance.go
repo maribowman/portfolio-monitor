@@ -1,5 +1,7 @@
 package model
 
+import "encoding/json"
+
 type CoinbaseWrapper struct {
 	Asset Asset `json:"data"`
 }
@@ -16,14 +18,18 @@ type Holding struct {
 	Amount string `json:"amount"`
 }
 
+func ToString(model interface{}) string {
+	jsonBytes, err := json.Marshal(model)
+	if err != nil {
+		return ""
+	}
+	return string(jsonBytes)
+}
+
 type FinanceService interface {
 	ProcessAsset(ticker string) (Asset, error)
 }
 
 type FinanceClient interface {
 	GetPrice(ticker, currency string) (Asset, error)
-}
-
-type MessengerClient interface {
-	Push(holding Holding, recipient string) error
 }

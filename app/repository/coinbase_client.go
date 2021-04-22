@@ -24,7 +24,12 @@ func NewCoinbaseClient() model.FinanceClient {
 // GetPrice Coinbase API: https://developers.coinbase.com/api/v2?shell#prices
 func (client *CoinbaseClient) GetPrice(ticker, currency string) (model.Asset, error) {
 	var response model.CoinbaseWrapper
-	if err := client.restClient.getData("api.coinbase.com", "/v2", fmt.Sprintf("/prices/%s-%s/spot", ticker, currency), nil, nil, &response); err != nil {
+	details := RequestDetails{
+		Protocol: "https",
+		BaseUrl:  "api.coinbase.com",
+		Path:     fmt.Sprintf("/v2/prices/%s-%s/spot", ticker, currency),
+	}
+	if err := client.restClient.getData(details, &response); err != nil {
 		return model.Asset{}, err
 	}
 	return response.Asset, nil
@@ -32,8 +37,15 @@ func (client *CoinbaseClient) GetPrice(ticker, currency string) (model.Asset, er
 
 func (client *CoinbaseClient) GetPortfolio(ticker string) (string, error) {
 	var response string
-	headers := authenticationHeaders(http.MethodGet, "/v2/accounts")
-	if err := client.restClient.getData("api.coinbase.com", "/v2/accounts", "", headers, nil, &response); err != nil {
+	details := RequestDetails{
+		Protocol: "https",
+		BaseUrl:  "api.coinbase.com",
+		Path:     "/v2/accounts",
+		Query:    nil,
+		Headers:  authenticationHeaders(http.MethodGet, "/v2/accounts"),
+		Body:     "",
+	}
+	if err := client.restClient.getData(details, &response); err != nil {
 		return "", err
 	}
 	return response, nil
