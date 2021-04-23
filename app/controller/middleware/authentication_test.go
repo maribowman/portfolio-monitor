@@ -10,6 +10,7 @@ import (
 )
 
 func TestAuthorized(t *testing.T) {
+	// todo write more test cases
 	// given
 	headers := make(http.Header)
 	headers.Add("key", "test_key")
