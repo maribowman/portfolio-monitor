@@ -32,4 +32,5 @@ type FinanceService interface {
 
 type FinanceClient interface {
 	GetPrice(ticker, currency string) (Asset, error)
+	GetHoldings(ticker string) (string, error)
 }

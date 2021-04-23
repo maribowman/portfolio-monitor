@@ -35,14 +35,14 @@ func (client *CoinbaseClient) GetPrice(ticker, currency string) (model.Asset, er
 	return response.Asset, nil
 }
 
-func (client *CoinbaseClient) GetPortfolio(ticker string) (string, error) {
+func (client *CoinbaseClient) GetHoldings(ticker string) (string, error) {
 	var response string
 	details := RequestDetails{
 		Protocol: "https",
 		BaseUrl:  "api.coinbase.com",
 		Path:     "/v2/accounts",
 		Query:    nil,
-		Headers:  authenticationHeaders(http.MethodGet, "/v2/accounts"),
+		Headers:  generateAuthenticationHeaders(http.MethodGet, "/v2/accounts"),
 		Body:     "",
 	}
 	if err := client.restClient.getData(details, &response); err != nil {
@@ -51,10 +51,10 @@ func (client *CoinbaseClient) GetPortfolio(ticker string) (string, error) {
 	return response, nil
 }
 
-func authenticationHeaders(method, apiPath string) map[string]interface{} {
+func generateAuthenticationHeaders(method, apiPath string) map[string]interface{} {
 	timestamp := time.Now().UTC().Unix()
-	apiKey := ""
-	apiSecret := ""
+	apiKey := "test_key"
+	apiSecret := "test_secret"
 
 	// id := ""
 
