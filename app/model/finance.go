@@ -1,6 +1,8 @@
 package model
 
-import "encoding/json"
+import (
+	"encoding/json"
+)
 
 type CoinbaseWrapper struct {
 	Asset Asset `json:"data"`
@@ -16,6 +18,16 @@ type Holding struct {
 	Ticker string `json:"ticker"`
 	ISIN   string `json:"isin"`
 	Amount string `json:"amount"`
+}
+
+type Transaction struct {
+	ISIN        string  `json:"isin,omitempty"`
+	Ticker      string  `json:"ticker" binding:"required"`
+	ActualPrice float32 `json:"actualPrice" binding:"required"`
+	TotalPrice  float32 `json:"totalPrice" binding:"required"`
+	Currency    string  `json:"currency,omitempty"`
+	Date        string  `json:"date,omitempty"`
+	Comment     string  `json:"comment,omitempty"`
 }
 
 func ToString(model interface{}) string {

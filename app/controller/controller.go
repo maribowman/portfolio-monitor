@@ -22,4 +22,7 @@ func NewController(wiring *Wiring) {
 
 	wiring.Router.Use(middleware.AuthorizationMiddleware())
 	wiring.Router.GET("/crypto/:coinTicker", controller.GetCrypto)
+
+	wiring.Router.POST("/portfolio/transactions/:type", controller.PostTransaction)
+
 }
