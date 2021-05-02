@@ -27,7 +27,7 @@ func ToString(model interface{}) string {
 }
 
 type FinanceService interface {
-	ProcessAsset(ticker string) (Asset, error)
+	ProcessAsset(ticker, currency string) (Asset, error)
 }
 
 type FinanceClient interface {

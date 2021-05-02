@@ -3,7 +3,7 @@ server:
   mode: debug
 signal:
   dispatcherServer: 192.168.178.49:9876
-  linkedDevice: ${portfolio-monitor.signal.linkedDevice}
+  linkedDevice: "+4915226264500"
 coinbase:
   apiKey: ${portfolio-monitor.coinbase.apiKey}
   apiSecret: ${portfolio-monitor.coinbase.apiSecret}
