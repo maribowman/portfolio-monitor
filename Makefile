@@ -12,6 +12,10 @@ build:
 run: build
 	@docker run -d -p 9876:9876 --name $(TAG) $(IMAGE) .
 
+push: build
+	docker push $(IMAGE)
+	docker push $(NAME):latest
+
 ### testing
 tests:
 	@go test ./...
@@ -24,13 +28,3 @@ smoke: build
 	@bash ./test/smoke.sh
 	@docker stop test-runner
 	@docker rmi $(IMAGE)
-
-# TODO create dockerfiles for ingestion and faust
-### docker
-build:
-	docker build -t $(IMAGE) .
-	docker image prune -f --filter label=stage=builder
-
-run: build
-	@docker run -d -p 8080:8080 --name $(TAG) $(IMAGE) .
-
